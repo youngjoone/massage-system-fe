@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await axiosInstance.get('/auth/me');
         if (response.status === 200 && response.data.username) {
-          setUser({ username: response.data.username }); // 사용자 정보 설정
-          localStorage.setItem('user', JSON.stringify({ username: response.data.username }));
+          setUser({ username: response.data.username, shopName: response.data.shopName }); // 사용자 정보 설정
+          localStorage.setItem('user', JSON.stringify({ username: response.data.username, shopName: response.data.shopName }));
         } else {
           setUser(null);
           localStorage.removeItem('user');

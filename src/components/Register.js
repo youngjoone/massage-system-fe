@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 임포트
 
 function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [shops, setShops] = useState([]); // 가게 목록 상태
+  const [selectedShopId, setSelectedShopId] = useState(''); // 선택된 가게 ID
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 가게 목록을 가져옵니다.
+    const fetchShops = async () => {
+      try {
+        const response = await axiosInstance.get('/shops');
+        setShops(response.data);
+      } catch (error) {
+        console.error('Error fetching shops:', error);
+        alert('가게 목록을 불러오는데 실패했습니다.');
+      }
+    };
+    fetchShops();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,25 +32,28 @@ function Register() {
       return;
     }
 
+    if (!selectedShopId) {
+      alert('가게를 선택해주세요.');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:8080/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password, role: 'USER' }), // Default role
+      const response = await axiosInstance.post('/auth/register', {
+        username,
+        password,
+        role: 'USER', // 기본 역할은 USER
+        shopId: selectedShopId, // 선택된 shopId 전송
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert('회원가입 성공!');
         navigate('/'); // Redirect to login page
       } else {
-        const errorData = await response.json();
-        alert(`회원가입 실패: ${errorData.message || response.statusText}`);
+        alert(`회원가입 실패: ${response.data.message || response.statusText}`);
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      alert('회원가입 중 오류가 발생했습니다.');
+      alert(`회원가입 중 오류가 발생했습니다: ${error.response?.data?.message || error.message}`);
     }
   };
 
@@ -73,6 +93,23 @@ function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="shop">가게 선택:</label>
+          <select
+            id="shop"
+            name="shop"
+            value={selectedShopId}
+            onChange={(e) => setSelectedShopId(e.target.value)}
+            required
+          >
+            <option value="">가게를 선택하세요</option>
+            {shops.map((shop) => (
+              <option key={shop.id} value={shop.id}>
+                {shop.name}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit">회원가입</button>
       </form>
