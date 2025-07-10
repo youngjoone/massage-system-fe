@@ -1,8 +1,17 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function Dashboard() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); // Redirect to login page after logout
+  };
+
   return (
     <div className="dashboard-layout">
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -16,15 +25,15 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard/announcements">공지사항</Nav.Link>
             </Nav>
             <Nav>
-              {/* User info or logout button can go here */}
-              <Nav.Link href="#logout">로그아웃</Nav.Link>
+              {user && <Navbar.Text className="me-3">환영합니다, {user.username}님</Navbar.Text>}
+              <Nav.Link onClick={handleLogout}>로그아웃</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
       <Container className="mt-4">
-        <Outlet /> {/* This is where nested routes will render */}
+        <Outlet />
       </Container>
     </div>
   );

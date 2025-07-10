@@ -9,25 +9,31 @@ import SendMessagePage from './components/SendMessagePage';
 import AnnouncementsPage from './components/AnnouncementsPage';
 import './App.css';
 
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
   return (
-    <Router>
-      <div className="App">
-        {/* Header is now part of Dashboard component */}
-        <main className="App-main">
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<HomePage />} /> {/* Change this line */}
-              <Route path="booking" element={<BookingPage />} />
-              <Route path="send-message" element={<SendMessagePage />} />
-              <Route path="announcements" element={<AnnouncementsPage />} />
-            </Route>
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <main className="App-main">
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<Dashboard />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="booking" element={<BookingPage />} />
+                  <Route path="send-message" element={<SendMessagePage />} />
+                  <Route path="announcements" element={<AnnouncementsPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
