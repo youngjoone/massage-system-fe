@@ -7,6 +7,9 @@ import HomePage from './components/HomePage';
 import BookingPage from './components/BookingPage';
 import SendMessagePage from './components/SendMessagePage';
 import AnnouncementsPage from './components/AnnouncementsPage';
+import AddShopPage from './components/AddShopPage';
+import ShopManagementPage from './components/ShopManagementPage';
+import EditShopPage from './components/EditShopPage'; // EditShopPage 임포트
 import './App.css';
 
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -32,6 +35,9 @@ function AppContent() {
                 <Route path="booking" element={<BookingPage />} />
                 <Route path="send-message" element={<SendMessagePage />} />
                 <Route path="announcements" element={<AnnouncementsPage />} />
+                <Route path="add-shop" element={<AddShopPage />} />
+                <Route path="shop-management" element={<ShopManagementPage />} />
+                <Route path="shops/edit/:id" element={<EditShopPage />} /> {/* EditShopPage 라우트 추가 */}
               </Route>
             </Route>
           </Routes>

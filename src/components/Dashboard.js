@@ -23,6 +23,9 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard/booking">예약하기</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/send-message">문자보내기</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/announcements">공지사항</Nav.Link>
+              {user && user.role === 'ADMIN' && (
+                <Nav.Link as={Link} to="/dashboard/shop-management">가게 관리</Nav.Link>
+              )}
             </Nav>
             <Nav>
               {user && <Navbar.Text className="me-3">환영합니다, {user.username}님</Navbar.Text>}
