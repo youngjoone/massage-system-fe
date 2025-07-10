@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 임포트
 
 function BookingPage() {
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
@@ -13,12 +14,8 @@ function BookingPage() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/massageservices');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setServices(data);
+        const response = await axiosInstance.get('/massageservices'); // axiosInstance 사용
+        setServices(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -40,10 +37,7 @@ function BookingPage() {
     const formattedTime = selectedDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const selectedService = services.find(service => service.id === parseInt(selectedServiceId));
 
-    alert(`예약 요청:
-날짜: ${formattedDate}
-시간: ${formattedTime}
-서비스: ${selectedService ? selectedService.name : '알 수 없음'}`);
+    alert(`예약 요청:\n날짜: ${formattedDate}\n시간: ${formattedTime}\n서비스: ${selectedService ? selectedService.name : '알 수 없음'}`);
     // Further logic for actual booking via API
   };
 

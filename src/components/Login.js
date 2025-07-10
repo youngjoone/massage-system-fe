@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios'; // axios 임포트
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 임포트
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -22,16 +22,13 @@ function Login() {
     e.preventDefault();
 
     try {
-      // axios를 사용하여 로그인 요청
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
+      // axiosInstance를 사용하여 로그인 요청
+      const response = await axiosInstance.post('/auth/login', {
         username,
         password,
-      }, {
-        withCredentials: true // HttpOnly 쿠키를 받기 위해 필요
       });
 
       if (response.status === 200) {
-        // 백엔드에서 사용자 정보를 응답 본문에 포함했다면 사용
         login(response.data); 
         alert('로그인 성공!');
         navigate('/dashboard');

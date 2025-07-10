@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 임포트
 
 function AnnouncementsPage() {
   const [announcements, setAnnouncements] = useState([]);
@@ -10,12 +11,8 @@ function AnnouncementsPage() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/announcements');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setAnnouncements(data);
+        const response = await axiosInstance.get('/announcements'); // axiosInstance 사용
+        setAnnouncements(response.data);
       } catch (error) {
         setError(error);
       } finally {

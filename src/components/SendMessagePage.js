@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Card, Alert, ListGroup } from 'react-bootstrap';
 import UserSelectionModal from './UserSelectionModal';
+import axiosInstance from '../api/axiosInstance'; // axiosInstance 임포트
 
 function SendMessagePage() {
   const [users, setUsers] = useState([]); // All users fetched from backend
@@ -13,12 +14,8 @@ function SendMessagePage() {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/users');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsers(data);
+        const response = await axiosInstance.get('/users'); // axiosInstance 사용
+        setUsers(response.data);
       } catch (error) {
         console.error("Failed to fetch all users:", error);
         // Optionally set an error state for the page if fetching all users fails
