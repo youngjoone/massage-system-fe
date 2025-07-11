@@ -148,6 +148,8 @@ body {
 
 .modern-nav {
   gap: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .modern-nav-link {
@@ -156,12 +158,15 @@ body {
   gap: 8px;
   color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 500;
-  padding: 10px 16px !important;
+  padding: 12px 16px !important;
   border-radius: 25px;
   transition: all 0.3s ease;
   text-decoration: none;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  height: 44px;
+  box-sizing: border-box;
 }
 
 .modern-nav-link::before {
@@ -202,6 +207,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
+  height: 44px;
 }
 
 .user-welcome {
@@ -210,10 +216,12 @@ body {
   gap: 4px;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 10px 16px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   backdrop-filter: blur(5px);
+  height: 44px;
+  box-sizing: border-box;
 }
 
 .welcome-text {
@@ -231,12 +239,15 @@ body {
   gap: 8px;
   color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 500;
-  padding: 10px 16px !important;
+  padding: 12px 16px !important;
   border-radius: 25px;
   background: rgba(239, 68, 68, 0.2);
   transition: all 0.3s ease;
   text-decoration: none;
   border: 1px solid rgba(239, 68, 68, 0.3);
+  height: 44px;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .logout-btn:hover {
@@ -262,6 +273,15 @@ body {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* Bootstrap navbar collapse fix */
+.navbar-collapse {
+  align-items: center;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
 /* Responsive adjustments */
 @media (max-width: 991px) {
   .modern-navbar {
@@ -270,6 +290,7 @@ body {
   
   .modern-nav-link {
     margin: 4px 0;
+    height: auto;
   }
   
   .modern-user-section {
@@ -279,11 +300,17 @@ body {
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+    height: auto;
   }
   
   .user-welcome {
     width: 100%;
     justify-content: center;
+    height: auto;
+  }
+  
+  .logout-btn {
+    height: auto;
   }
 }
 
