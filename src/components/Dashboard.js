@@ -14,23 +14,49 @@ function Dashboard() {
 
   return (
     <div className="dashboard-layout">
-      <Navbar bg="light" variant="light" expand="lg" className="border-bottom">
-        <Container>
-          <Navbar.Brand as={Link} to="/dashboard" className="text-dark fw-bold">마사지예약 사내시스템</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar expand="lg" className="modern-navbar shadow-sm">
+        <Container fluid className="px-4">
+          <Navbar.Brand as={Link} to="/dashboard" className="modern-brand">
+            <span className="brand-icon">💆‍♀️</span>
+            <span className="brand-text">마사지예약 사내시스템</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="modern-toggle" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/dashboard/booking" className="text-dark">예약하기</Nav.Link>
-              <Nav.Link as={Link} to="/dashboard/send-message" className="text-dark">문자보내기</Nav.Link>
-              <Nav.Link as={Link} to="/dashboard/announcements" className="text-dark">공지사항</Nav.Link>
-              <Nav.Link as={Link} to="/dashboard/customer-management" className="text-dark">고객 관리</Nav.Link>
+            <Nav className="me-auto modern-nav">
+              <Nav.Link as={Link} to="/dashboard/booking" className="modern-nav-link">
+                <span className="nav-icon">📅</span>
+                예약하기
+              </Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/send-message" className="modern-nav-link">
+                <span className="nav-icon">💬</span>
+                문자보내기
+              </Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/announcements" className="modern-nav-link">
+                <span className="nav-icon">📢</span>
+                공지사항
+              </Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/customer-management" className="modern-nav-link">
+                <span className="nav-icon">👥</span>
+                고객 관리
+              </Nav.Link>
               {user && user.role === 'ADMIN' && (
-                <Nav.Link as={Link} to="/dashboard/shop-management" className="text-dark">가게 관리</Nav.Link>
+                <Nav.Link as={Link} to="/dashboard/shop-management" className="modern-nav-link">
+                  <span className="nav-icon">🏪</span>
+                  가게 관리
+                </Nav.Link>
               )}
             </Nav>
-            <Nav>
-              {user && <Navbar.Text className="me-3 text-dark">환영합니다, {user.username}님</Navbar.Text>}
-              <Nav.Link onClick={handleLogout} className="text-dark">로그아웃</Nav.Link>
+            <Nav className="modern-user-section">
+              {user && (
+                <div className="user-welcome">
+                  <span className="welcome-text">환영합니다, </span>
+                  <span className="username">{user.username}님</span>
+                </div>
+              )}
+              <Nav.Link onClick={handleLogout} className="logout-btn">
+                <span className="nav-icon">🚪</span>
+                로그아웃
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
