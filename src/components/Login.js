@@ -37,10 +37,17 @@ function Login() {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      if (error.response && error.response.status === 401) {
-        setErrorMessage('로그인 실패. 사용자 이름 또는 비밀번호를 확인하세요.');
+      if (error.response && error.response.data) {
+        // 백엔드에서 ErrorResponse 형식으로 오류를 반환한다고 가정
+        if (error.response.data.details) {
+          setErrorMessage(error.response.data.details.join('\n'));
+        } else if (error.response.data.message) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage('알 수 없는 로그인 오류가 발생했습니다.');
+        }
       } else {
-        setErrorMessage('로그인 중 오류가 발생했습니다.');
+        setErrorMessage('로그인 중 네트워크 오류가 발생했습니다.');
       }
     }
   };

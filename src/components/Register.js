@@ -8,6 +8,7 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [shops, setShops] = useState([]); // 가게 목록 상태
   const [selectedShopId, setSelectedShopId] = useState(''); // 선택된 가게 ID
+  const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태 추가
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function Register() {
         setShops(response.data);
       } catch (error) {
         console.error('Error fetching shops:', error);
-        alert('가게 목록을 불러오는데 실패했습니다.');
+        setErrorMessage('가게 목록을 불러오는데 실패했습니다.');
       }
     };
     fetchShops();
@@ -26,14 +27,15 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // 새로운 제출 시 에러 메시지 초기화
 
     if (password !== confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     if (!selectedShopId) {
-      alert('가게를 선택해주세요.');
+      setErrorMessage('가게를 선택해주세요.');
       return;
     }
 
@@ -49,17 +51,22 @@ function Register() {
         alert('회원가입 성공!');
         navigate('/'); // Redirect to login page
       } else {
-        alert(`회원가입 실패: ${response.data.message || response.statusText}`);
+        setErrorMessage(`회원가입 실패: ${response.data.message || response.statusText}`);
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      alert(`회원가입 중 오류가 발생했습니다: ${error.response?.data?.message || error.message}`);
+      if (error.response && error.response.data && error.response.data.details) {
+        setErrorMessage(error.response.data.details.join('\n'));
+      } else {
+        setErrorMessage(`회원가입 중 오류가 발생했습니다: ${error.response?.data?.message || error.message}`);
+      }
     }
   };
 
   return (
     <div className="register-container">
       <h2>회원가입</h2>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">사용자 이름:</label>
