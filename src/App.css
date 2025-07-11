@@ -1,68 +1,250 @@
+/* App.css */
+
+:root {
+  --primary-color: #1da1f2; /* X (Twitter) Blue */
+  --secondary-color: #e1e8ed; /* Light gray for secondary actions */
+  --danger-color: #e0245e; /* Instagram/X like red */
+  --warning-color: #ffad1f; /* Instagram/X like yellow */
+  --success-color: #17bf63; /* Instagram/X like green */
+
+  --background-light: #f0f2f5; /* Lighter background */
+  --background-white: #ffffff;
+  --text-dark: #14171a;
+  --text-medium: #657786;
+  --border-light: #e6ecf0;
+
+  --font-family-system: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-family-system);
+  color: var(--text-dark);
+  background-color: var(--background-light);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .App {
   text-align: center;
 }
 
-/* Removed .App-header styles as it's now part of Dashboard Navbar */
-
 .App-main {
   display: flex;
-  flex-direction: column; /* Changed to column for dashboard layout */
-  justify-content: flex-start; /* Align content to top */
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background-color: #f8f9fa;
+  min-height: 100vh;
+  background-color: var(--background-light);
   padding-top: 56px; /* Adjust based on Navbar height */
+}
+
+/* General Container/Card Styles */
+.container, .login-container, .register-container, .dashboard-container {
+  background-color: var(--background-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* More pronounced shadow for cards */
+  padding: 25px; /* Slightly reduced padding */
+  margin-bottom: 15px; /* Slightly reduced margin */
+  border: 1px solid var(--border-light); /* Subtle border */
 }
 
 .login-container,
 .register-container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  margin-top: 50px; /* Add some top margin for login/register forms */
+  margin-top: 50px;
 }
 
 .login-container h2,
-.register-container h2 {
-  margin-bottom: 20px;
-  color: #333;
+.register-container h2,
+.container h2 {
+  margin-bottom: 15px; /* Slightly reduced margin */
+  color: var(--text-dark);
+  font-weight: 700; /* Bolder headings */
 }
 
+/* Form Group Styles */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Slightly reduced margin */
   text-align: left;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  color: #555;
+  margin-bottom: 6px; /* Slightly reduced margin */
+  color: var(--text-medium);
+  font-size: 0.85rem; /* Slightly smaller font */
+  font-weight: 600; /* Bolder labels */
 }
 
-.form-group input {
+/* Form Control Styles */
+.form-control {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 10px 12px; /* Reduced padding */
+  border: 1px solid var(--border-light);
+  border-radius: 8px; 
   box-sizing: border-box;
+  font-size: 0.95rem; /* Slightly smaller font */
+  color: var(--text-dark);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.25); /* X (Twitter) blue glow */
+  outline: none;
+}
+
+/* Button Styles */
+.btn {
+  padding: 10px 20px; /* Reduced padding */
+  border-radius: 9999px; /* Pill shape */
+  font-size: 0.95rem; /* Slightly smaller font */
+  font-weight: 700; /* Bolder text */
   cursor: pointer;
-  font-size: 16px;
-  width: 100%;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  text-transform: uppercase; /* Uppercase text for buttons */
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--background-white);
+}
+
+.btn-primary:hover {
+  background-color: #1a8cd8;
+  border-color: #1a8cd8;
+  box-shadow: 0 2px 8px rgba(29, 161, 242, 0.2); /* Blue shadow on hover */
+}
+
+.btn-warning {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+  color: var(--text-dark); 
+}
+
+.btn-warning:hover {
+  background-color: #e69a00;
+  border-color: #e69a00;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: var(--background-white);
+}
+
+.btn-danger:hover {
+  background-color: #c71c4e;
+  border-color: #c71c4e;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background-color: #d4dde4;
+  border-color: #d4dde4;
+}
+
+/* Table Styles - Mimicking card-like rows */
+.table {
+  border-collapse: separate; 
+  border-spacing: 0 8px; /* Reduced space between rows */
+  border: none; 
+  border-radius: 0; 
+  overflow: hidden; 
+  box-shadow: none; 
+}
+
+.table thead {
+  display: none; 
+}
+
+.table tbody tr {
+  display: block; 
+  background-color: var(--background-white);
+  border-radius: 10px; /* Slightly smaller border-radius for rows */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); /* Softer shadow for each row/card */
+  margin-bottom: 8px; /* Reduced space between cards */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.table tbody tr:hover {
+  transform: translateY(-1px); /* Reduced lift effect on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); /* Softer pronounced shadow on hover */
+}
+
+.table tbody td {
+  display: block; 
+  border-top: none; 
+  padding: 12px 18px; /* Reduced padding */
+  text-align: left; 
+}
+
+/* Specific adjustments for table cells to display as key-value pairs or blocks */
+.table tbody td:first-child {
+  font-weight: 700; 
+  color: var(--text-dark);
+}
+
+.table tbody td:last-child {
+  text-align: right; 
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: 10px; /* Slightly smaller border-radius */
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12); /* Softer shadow */
+  border: none; 
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 18px; /* Reduced padding */
+}
+
+.modal-title {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.modal-body {
+  padding: 18px; /* Reduced padding */
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border-light);
+  padding: 12px 18px; /* Reduced padding */
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.alert-danger {
+  background-color: #ffe5e5;
+  border-color: #ffb3b3;
+  color: #cc0000;
+}
+
+.alert-success {
+  background-color: #e5ffe5;
+  border-color: #b3ffb3;
+  color: #00cc00;
+}
+
+/* Spinner Styles */
+.spinner-border {
+  color: var(--primary-color);
 }
 
 .dashboard-layout {
@@ -70,9 +252,9 @@ button[type="submit"]:hover {
 }
 
 .dashboard-container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  background-color: var(--background-white);
+  padding: 25px; /* Slightly reduced padding */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 15px; /* Slightly reduced margin */
 }

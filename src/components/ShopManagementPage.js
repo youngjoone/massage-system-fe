@@ -76,7 +76,7 @@ function ShopManagementPage() {
       {shops.length === 0 ? (
         <Alert variant="info">등록된 가게가 없습니다.</Alert>
       ) : (
-        <Table striped bordered hover responsive>
+        <Table hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -94,7 +94,7 @@ function ShopManagementPage() {
                 <td>{shop.address}</td>
                 <td>{shop.phoneNumber}</td>
                 <td>
-                  <Button as={Link} to={`/dashboard/shops/edit/${shop.id}`} variant="info" size="sm" className="me-2">
+                  <Button as={Link} to={`/dashboard/shops/edit/${shop.id}`} variant="warning" size="sm" className="me-2">
                     수정
                   </Button>
                   <Button variant="danger" size="sm" onClick={() => handleDeleteShop(shop.id)}>
